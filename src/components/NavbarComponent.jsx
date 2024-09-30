@@ -6,7 +6,12 @@ import logo from "../assets/logo.png";
 
 //icons
 import { CiUser, CiShoppingCart, CiHeart } from "react-icons/ci";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react";
 import CategoryComponent from "./CategoryComponent";
 
 function NavbarComponent() {
@@ -16,7 +21,9 @@ function NavbarComponent() {
       <nav className="bg-mainBlue h-full py-5 lg:h-[100px]">
         <div className="container mx-auto flex flex-col lg:flex-row items-center gap-3 h-full justify-between">
           {/* Logo */}
-          <img src={logo} alt="logo" />
+          <Link to={"/"}>
+            <img className="cursor-pointer" src={logo} alt="logo" />
+          </Link>
           {/* Search bar */}
           <div className="bg-whiteTextColor rounded-[20px]">
             <input
@@ -34,29 +41,36 @@ function NavbarComponent() {
               <li className="flex-center">
                 <CiUser color="white" size={25} />
                 <SignedOut>
-                    <SignInButton />
+                  <SignInButton />
                 </SignedOut>
                 <SignedIn>
-                    <UserButton afterSignOutUrl="'/" showName={true} appearance={{
-                        elements:{
-                            avatarBox:'w-[40px] h-[40px]'
-                        },
-                        variables:{
-                            colorText:'#f90'
-                        }
-                    }}/>
+                  <UserButton
+                    afterSignOutUrl="'/"
+                    showName={true}
+                    appearance={{
+                      elements: {
+                        avatarBox: "w-[40px] h-[40px]",
+                      },
+                      variables: {
+                        colorText: "#f90",
+                      },
+                    }}
+                  />
                 </SignedIn>
-
-                </li>
+              </li>
               <li className="flex-center gap-2">
                 <CiHeart color="white" size={25} />
                 <span className="badge">0</span>
-                <Link to={"/"} className="text-whiteTextColor">Favorite</Link>
+                <Link to={"/"} className="text-whiteTextColor">
+                  Favorite
+                </Link>
               </li>
               <li className="flex-center gap-2">
                 <CiShoppingCart color="white" size={25} />
                 <span className="badge">0</span>
-                <Link to={"/cart"} className="text-whiteTextColor">Shoping Cart</Link>
+                <Link to={"/cart"} className="text-whiteTextColor">
+                  Shoping Cart
+                </Link>
               </li>
             </ul>
           </div>
