@@ -6,13 +6,15 @@ import logo from "../assets/logo.png";
 
 //icons
 import { CiUser, CiShoppingCart, CiHeart } from "react-icons/ci";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import CategoryComponent from "./CategoryComponent";
 
 function NavbarComponent() {
   return (
     <div className=" ">
       <HeadingComponent />
-      <nav className="bg-mainBlue h-[100px]">
-        <div className="container mx-auto flex items-center h-full justify-between">
+      <nav className="bg-mainBlue h-full py-5 lg:h-[100px]">
+        <div className="container mx-auto flex flex-col lg:flex-row items-center gap-3 h-full justify-between">
           {/* Logo */}
           <img src={logo} alt="logo" />
           {/* Search bar */}
@@ -22,7 +24,7 @@ function NavbarComponent() {
               placeholder="Search product"
               className="bg-transparent outline-none px-[25px] py-[17px]"
             />
-            <button className="bg-mainYellow text-whiteTextColor px-[25px]  py-[17px] rounded-[20px]">
+            <button className="bg-mainYellow text-whiteTextColor px-[25px] py-[17px] rounded-[20px]">
               Search
             </button>
           </div>
@@ -31,8 +33,21 @@ function NavbarComponent() {
             <ul className="flex-center gap-5">
               <li className="flex-center">
                 <CiUser color="white" size={25} />
-                <Link to={"/"} className="text-whiteTextColor">SignIn</Link>
-              </li>
+                <SignedOut>
+                    <SignInButton />
+                </SignedOut>
+                <SignedIn>
+                    <UserButton afterSignOutUrl="'/" showName={true} appearance={{
+                        elements:{
+                            avatarBox:'w-[40px] h-[40px]'
+                        },
+                        variables:{
+                            colorText:'#f90'
+                        }
+                    }}/>
+                </SignedIn>
+
+                </li>
               <li className="flex-center gap-2">
                 <CiHeart color="white" size={25} />
                 <span className="badge">0</span>
@@ -47,6 +62,7 @@ function NavbarComponent() {
           </div>
         </div>
       </nav>
+      <CategoryComponent />
     </div>
   );
 }
