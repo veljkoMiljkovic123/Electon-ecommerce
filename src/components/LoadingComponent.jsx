@@ -4,7 +4,7 @@ import React from 'react'
 function LoadingComponent() {
   return (
     <div className='flex justify-center'>
-        <CircularProgress size={40} />
+        <CircularProgress size={60} />
     </div>
   )
 }

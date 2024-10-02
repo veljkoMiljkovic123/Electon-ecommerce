@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ProductsService from "../services/productsService";
 import LoadingComponent from "../components/LoadingComponent";
+import { CiHeart } from "react-icons/ci";
 import { Rating } from "@mui/material";
 //icons
 import { FaCheck } from "react-icons/fa";
-import { ImCross } from "react-icons/im";
+import { useDispatch } from "react-redux";
+import { saveInCartAction } from "../store/cartSlice";
 
 function SingleProductPage() {
   const [singleProduct, setSingleProduct] = useState({});
@@ -13,7 +15,8 @@ function SingleProductPage() {
   const [currentImage, setCurrentImage] = useState(0);
   //1. zumi id
   const { productId } = useParams();
-  console.log(productId);
+  const dispach = useDispatch()
+ 
 
   useEffect(() => {
     ProductsService.getSingleProduct(productId)
@@ -28,10 +31,14 @@ function SingleProductPage() {
     setCurrentImage(id);
   }
 
+  function handleAddToCart(){
+    dispach(saveInCartAction(singleProduct))
+  }
+
   return (
     <div className="px-5 my-4">
       {isLoading ? (
-        <div className="container mx-auto flex-col md:flex-row items-start gap-5">
+        <div className="container mx-auto flex flex-col md:flex-row items-start gap-5">
           {/* left side */}
           <div className="w-full md:w-[50%]">
             <img
@@ -72,7 +79,13 @@ function SingleProductPage() {
                {singleProduct.stock?<span className="flex items-center gap-2 text-lightGreen"> <FaCheck /> In Stock</span>:<span className="flex items-center gap-2 text-mainRed"><ImCross/> Out Of Stock</span>}
             </p>
             <p>Hurry up! Only <span className="font-bold"> {singleProduct.stock}</span> product left in stock!</p>
-            <p>Total: <price:span className='text-blueTextColor text-[20px] font-bold'>${singleProduct.price}</price:span></p>
+            <p>Total price: <span className='text-blueTextColor text-[20px] font-bold'>${singleProduct.price}</span></p>
+
+            {/* ADD / Favorite Button */}
+            <div className="flex items-center mt-12 gap-5">
+              <Link onClick={handleAddToCart} to={'/cart'} className="bg-mainYellow text-white px-6 py-3 rounded-lg text-[20px]">Add to Cart</Link>
+              <Link to={'/favorite'} className="bg-lightBlue px-6 p-3 rounded-lg border border-blackTextColor"><CiHeart size={30}/></Link>
+            </div>
           </div>
         </div>
       ) : (

@@ -13,8 +13,11 @@ import {
   UserButton,
 } from "@clerk/clerk-react";
 import CategoryComponent from "./CategoryComponent";
+import { useSelector } from "react-redux";
 
 function NavbarComponent() {
+
+  const totalProduct = useSelector(state=>state.cartStore.totalProduct)
   return (
     <div className=" ">
       <HeadingComponent />
@@ -67,7 +70,7 @@ function NavbarComponent() {
               </li>
               <li className="flex-center gap-2">
                 <CiShoppingCart color="white" size={25} />
-                <span className="badge">0</span>
+                <span className="badge">{totalProduct}</span>
                 <Link to={"/cart"} className="text-whiteTextColor">
                   Shoping Cart
                 </Link>
