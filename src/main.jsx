@@ -10,6 +10,7 @@ import CartPage from "./pages/CartPage.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { Provider } from "react-redux";
 import store from "./store/store.js";
+import FavoritePage from "./pages/FavoritePage.jsx";
 
 //clerk
 // Import your publishable key
@@ -42,9 +43,9 @@ const router = createBrowserRouter([
         element: <CartPage />,
       },
       {
-        path:'/favorite',
-        element:''
-      }
+        path: "/favorite",
+        element:<FavoritePage />
+      },
     ],
   },
 ]);
@@ -52,9 +53,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <RouterProvider router={router} />
-    </ClerkProvider>
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+        <RouterProvider router={router} />
+      </ClerkProvider>
     </Provider>
   </StrictMode>
 );

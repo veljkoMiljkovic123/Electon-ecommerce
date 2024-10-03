@@ -1,11 +1,15 @@
 import { Rating } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
 function CardProductComponent({ product,activeView }) {
   console.log(product);
 
   return (
-    <div className={activeView==='listView'?'w-full flex items-center border-b pb-2 border-mainBlue justify-between':'w-[250px] h-full border border-mainBlue rounded-lg flex flex-col items-center gap-3 pb-3 pt-2'}>
+    <motion.div
+    whileHover={{scale:1.05}}
+    className={activeView==='listView'?'w-full flex items-center border-b pb-2 border-mainBlue justify-between':'w-[250px] h-full border border-mainBlue rounded-lg flex flex-col items-center gap-3 pb-3 pt-2'}>
       
         <img
           src={product.thumbnail}
@@ -34,7 +38,7 @@ function CardProductComponent({ product,activeView }) {
       >
         View Detail
       </Link>
-    </div>
+    </motion.div>
   );
 }
 

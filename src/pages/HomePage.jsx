@@ -5,6 +5,8 @@ import { saveAllProductsAction } from "../store/productsSlice";
 import CardProductComponent from "../components/CardProductComponent";
 import LoadingComponent from "../components/LoadingComponent";
 import CategoryComponent from "../components/CategoryComponent";
+import { motion } from "framer-motion";
+
 //icons
 import { CiCircleList } from "react-icons/ci";
 import { MdGridView } from "react-icons/md";
@@ -39,11 +41,13 @@ function HomePage() {
         <button className={activeView==='gridView'?'bg-mainBlue p-1 rouded-[10px] text-whiteTextColor':'' }><MdGridView onClick={() => setActiveView('gridView')} size={30}/></button>
       </div>
       {/* Our products */}
-      <div className={activeView==='listView'?"grid grid-cols-1 gap-5":"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-5 2xl:grid-cols-4 place-items-center"}>
+      <motion.div 
+      
+      className={activeView==='listView'?"grid grid-cols-1 gap-5":"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-5 2xl:grid-cols-4 place-items-center"}>
         {allProducts.map((product) => {
           return <CardProductComponent activeView={activeView} key={product.id} product={product} />;
         })}
-      </div>
+      </motion.div>
     </main>
   );
 }

@@ -6,17 +6,20 @@ import { CiHeart } from "react-icons/ci";
 import { Rating } from "@mui/material";
 //icons
 import { FaCheck } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { saveInCartAction } from "../store/cartSlice";
+import { saveFavoriteAction } from "../store/favoriteSlice";
 
 function SingleProductPage() {
   const [singleProduct, setSingleProduct] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
+  const [favoriteIdIcon,setFavoriteIdIcon] = useState(null)
   //1. zumi id
   const { productId } = useParams();
   const dispach = useDispatch()
  
+  const {allFavorite} = useSelector(state=>state.favoriteStore)
 
   useEffect(() => {
     ProductsService.getSingleProduct(productId)
@@ -34,6 +37,18 @@ function SingleProductPage() {
   function handleAddToCart(){
     dispach(saveInCartAction(singleProduct))
   }
+  function handleAddFAvorite(){
+    dispach(saveFavoriteAction(singleProduct))
+  }
+
+  useEffect(()=>{
+    allFavorite.find((item)=>{
+      if(item.id===parseInt(productId)){
+        setFavoriteIdIcon(item.id)
+        return
+      }
+    })
+  },[allFavorite])
 
   return (
     <div className="px-5 my-4">
@@ -84,7 +99,10 @@ function SingleProductPage() {
             {/* ADD / Favorite Button */}
             <div className="flex items-center mt-12 gap-5">
               <Link onClick={handleAddToCart} to={'/cart'} className="bg-mainYellow text-white px-6 py-3 rounded-lg text-[20px]">Add to Cart</Link>
-              <Link to={'/favorite'} className="bg-lightBlue px-6 p-3 rounded-lg border border-blackTextColor"><CiHeart size={30}/></Link>
+              <Link to={'/favorite'} className="bg-lightBlue px-6 p-3 rounded-lg border border-blackTextColor" onClick={handleAddFAvorite}>
+
+              {favoriteIdIcon === parseInt(productId)?<CiHeart size={30} color="red"/>:<CiHeart size={30}/>}
+              </Link>
             </div>
           </div>
         </div>
